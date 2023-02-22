@@ -1,0 +1,32 @@
+{
+	"compilerOptions": {
+		/* Basic Options */
+		// "incremental": true,				   /* Enable incremental compilation */
+		"target": "ESNEXT",						  /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */
+		"declaration": true, // Has to be true for composite projects.
+		"module": "CommonJS",
+		// "module": "amd",
+		// "outFile": "./build/gear3engine.js",
+		"outDir": "./build",
+		// "allowJs": false,
+		"rootDir": "./src",
+		// "baseUrl": "./src",
+		// "rootDir": ".", // Actually defaults to "." due to composite. See https://www.typescriptlang.org/tsconfig#rootDir
+		"sourceMap": true,
+		"esModuleInterop": true,
+		"moduleResolution": "node",
+		"experimentalDecorators": true,		   /* Enables experimental support for ES7 decorators. */
+		"emitDecoratorMetadata": true,			/* Enables experimental support for emitting type metadata for decorators. */
+		// "composite": true,
+        "removeComments": true,
+		"strictPropertyInitialization": false,
+		"useDefineForClassFields": false,
+	},
+	"include": [
+		 "./src/**/*"
+	],
+	"exclude": [
+		"./node_modules",
+		"./build",
+	]
+}

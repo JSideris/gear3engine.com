@@ -1,0 +1,30 @@
+{
+  "name": "gear3engine-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esm": "^3.2.25",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "ts-loader": "^9.4.1",
+    "typescript": "^4.9.3",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.0",
+    "webpack-dev-server": "^4.11.1"
+  },
+  "dependencies": {
+    "dothtml": "^5.2.0",
+    "g3e-canvas-2d": "file:../../GAMES-SIMULATORS-FUN/gear3engine/plugins/g3e-canvas-2d",
+    "g3e-canvas-3d": "file:../../GAMES-SIMULATORS-FUN/gear3engine/plugins/g3e-canvas-3d",
+    "g3e-client": "file:../../GAMES-SIMULATORS-FUN/gear3engine/plugins/g3e-client",
+    "g3e-client-debugger": "file:../../GAMES-SIMULATORS-FUN/gear3engine/plugins/g3e-client-debugger",
+    "gear3engine": "file:../../GAMES-SIMULATORS-FUN/gear3engine/plugins/gear3engine",
+    "pixi-multistyle-text": "^0.10.0"
+  }
+}
