@@ -18,23 +18,23 @@ export default class BusinessManager extends SceneManager{
 	gm: GameManager;
 	private loadDelayer = 0;
 
+	private allSlices: Array<{texture:Three.Texture, planeNormal:"x"|"y"|"z", ox:number, oy:number, oz:number, scale:number}> = [];
+
 	constructor(){
 		super();
 
-		this.addSlice(require(`../../../assets/brain/cor/de15d75c-163d778d-e8dd6c89-018df327-2314c22f.png`).default, "x", 16,0,0, 0.949);
-
-		for(let i = 0; i < BrainDataSag.length/2; i+=1){
-			this.addSlice(require(`../../../assets/brain/sag/${BrainDataSag[i].ID}.png`).default, "z", 0,0,(BrainDataSag[i].IndexInSeries - 60) * 2);
-		}
-
-		for(let i = 0; i < BrainDataAx.length; i+=5){
-			this.addSlice(require(`../../../assets/brain/ax/${BrainDataAx[i].ID}.png`).default, "y", 0,(BrainDataAx[i].IndexInSeries - 15) * 4 + 8,0);
-		}
+		this.addAllSlices();
 	}
 
 	enter() {
+		console.log("VIEWER?", !!this.viewer, this.viewer?.alive);
 		if(!this.viewer || !this.viewer.alive) {
 			this.viewer = this.gi.make(ScanViewer);
+			
+			for(let i = 0; i < this.allSlices.length; i++){
+				let s = this.allSlices[i];
+				this.viewer.addSlice(s.texture, s.planeNormal, s.ox, s.oy, s.oz, s.scale);
+			}
 		}
 
 		if(!this.frontDirectionalLightSource){
@@ -95,6 +95,18 @@ export default class BusinessManager extends SceneManager{
 		this.gm.target = 1;
 	}
 
+	async addAllSlices(){
+		await this.addSlice(require(`../../../assets/brain/cor/de15d75c-163d778d-e8dd6c89-018df327-2314c22f.png`).default, "x", 16,0,0, 0.949);
+
+		for(let i = 0; i < BrainDataSag.length/2; i+=1){
+			await this.addSlice(require(`../../../assets/brain/sag/${BrainDataSag[i].ID}.png`).default, "z", 0,0,(BrainDataSag[i].IndexInSeries - 60) * 2);
+		}
+
+		for(let i = 0; i < BrainDataAx.length; i+=5){
+			await this.addSlice(require(`../../../assets/brain/ax/${BrainDataAx[i].ID}.png`).default, "y", 0,(BrainDataAx[i].IndexInSeries - 15) * 4 + 8,0);
+		}
+	}
+
 	async addSlice(textureUrl: string, planeNormal: "x"|"y"|"z", ox: number, oy: number, oz: number, scale?: number){
 		let texture: Three.Texture = this.textureCache[textureUrl];
 		if(!texture){
@@ -111,7 +123,8 @@ export default class BusinessManager extends SceneManager{
 			this.textureCache[textureUrl] = texture;
 		}
 
-		this.viewer.addSlice(texture, planeNormal, ox, oy, oz, scale);
+		this.allSlices.push({texture:texture, planeNormal:planeNormal, ox:ox, oy:oy, oz:oz, scale:scale});
+		if(this.viewer) this.viewer.addSlice(texture, planeNormal, ox, oy, oz, scale);
 		
 	}
 

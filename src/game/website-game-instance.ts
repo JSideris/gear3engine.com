@@ -16,10 +16,10 @@ export default class WebsiteGameInstance extends GameInstance{
 	constructor(){
 		super();
 		this.pluginClient = new GameClientPlugin();
-		this.pluginDebugger = new ClientDebuggerPlugin();
+		// this.pluginDebugger = new ClientDebuggerPlugin();
 		this.usePlugin(this.pluginClient);
 
-		this.usePlugin(this.pluginDebugger);
+		// this.usePlugin(this.pluginDebugger);
 
 		this.usePlugin(new Canvas2dPlugin({
 			disableScroll: false,

@@ -97,8 +97,6 @@ class GameManager extends GameObject{
 				case GameModes.Information: { this.activeScene = null; break; }
 			}
 
-			console.log(mode);
-
 			if(this.activeScene) this.activeScene.enter();
 		}
 

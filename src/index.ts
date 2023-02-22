@@ -37,7 +37,6 @@ let mouseP = 0;
 dot(window.document.body).h(panes);
 
 window.addEventListener("scroll", e=>{
-	// console.log(window.scrollY);
 	handleScrolls();
 	updatePaneOrientations();
 });
@@ -52,7 +51,6 @@ function updatePaneOrientations(){
 		let pane = panes[i];
 		let relativeScroll = window.scrollY - i * PANE_HEIGHT;
 		let scrollP = relativeScroll / PANE_HEIGHT + 0.5;
-		// console.log(Math.round(scrollP * 100));
 		pane.setOrientation(mouseP, Math.min(1, Math.max(-1, scrollP)));
 	}
 }
@@ -96,7 +94,7 @@ function handleScrolls(){
 		gi.setMode(GameModes.Information);
 }
 
-const bias = 0.5
+const bias = 0.3;
 
 const scrollInRangeOfSection = (section: number) => window.scrollY > (section-1 + bias)*PANE_HEIGHT && window.scrollY <= (section-0 + bias)*PANE_HEIGHT;
 

@@ -142,6 +142,7 @@ class ScanViewer extends GameObject{
 	fixedUpdate(){
 		if(this.opacity == 0 && this.targetOpacity == 0){
 			this.gi.destroyObject(this, DeathType.Unloaded);
+			// this.destroy();
 		}
 	}
 

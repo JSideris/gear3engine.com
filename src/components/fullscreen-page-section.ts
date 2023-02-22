@@ -8,11 +8,16 @@ export type SectionInfo = {
 	bgColor?: number;
 }
 
+enum SizeMode {
+	tiny, compressed, normal
+}
+
 export default class FullscreenPageSection extends DotComponent{
 	sectionProps: SectionInfo;
 	props = {
 		closed: false
 	}
+	sizeMode: SizeMode = SizeMode.normal;
 
 	constructor(sectionInfo: SectionInfo){
 		super(sectionInfo);
@@ -25,7 +30,7 @@ export default class FullscreenPageSection extends DotComponent{
 					dot.div(()=>this.props.closed ? (this.sectionProps?.alignment == "left" ? ">" : "<") : (this.sectionProps?.alignment == "left" ? "<" : ">")).class("minimize-button")
 						.onClick(()=>{
 							this.props.closed = !this.props.closed;
-							dot.css(this.$refs["popout"]).widthP(this.props.closed ? 0 : 50)
+							dot.css(this.$refs["popout"]).widthP(this.props.closed ? 0 : this.sizeMode == SizeMode.normal ? 50 : this.sizeMode == SizeMode.compressed ? 60 : 80)
 
 							if(this.props.closed){
 								dot.css(this.$refs["header"]).opacity(0)
@@ -54,6 +59,61 @@ export default class FullscreenPageSection extends DotComponent{
 
 	ready(): void {
 		this.setOrientation(Math.random()*2-1,Math.random()*2-1);
+
+		window.addEventListener("resize", e=>{
+			this.resize();
+		});
+
+		this.resize();
+	}
+
+	resize(){
+		let w = window.innerWidth;
+		if(w > 1150){
+			// NORMAL MODE!
+			if(this.sizeMode != SizeMode.normal){
+				this.sizeMode = SizeMode.normal;
+				let m = this.sectionProps?.alignment == "center" ? 200 : 60;
+				dot.css(this.$refs.header)
+					.marginLeft(m).marginRight(m).fontSize(64)
+				dot.css(this.$refs.content)
+					.marginLeft(m).marginRight(m)
+				dot.css(this.$refs.popout)
+					.paddingTop(60)
+					.paddingBottom(60)
+					.widthP(this.sectionProps?.alignment == "center" ? 80 : this.props.closed ? 0 : 50)
+			}
+		}
+		else if(w > 760){
+			// COMPRESSED MODE!
+			if(this.sizeMode != SizeMode.compressed){
+				this.sizeMode = SizeMode.compressed;
+				let m = this.sectionProps?.alignment == "center" ? 100 : 30;
+				dot.css(this.$refs.header)
+					.marginLeft(m).marginRight(m).fontSize(48)
+				dot.css(this.$refs.content)
+					.marginLeft(m).marginRight(m)
+				dot.css(this.$refs.popout)
+					.paddingTop(30)
+					.paddingBottom(30)
+					.widthP(this.sectionProps?.alignment == "center" ? 80 : this.props.closed ? 0 : 60)
+			}
+		}
+		else {
+			// TINY MODE!
+			if(this.sizeMode != SizeMode.tiny){
+				this.sizeMode = SizeMode.tiny;
+				let m = 15;
+				dot.css(this.$refs.header)
+					.marginLeft(m).marginRight(m).fontSize(32)
+				dot.css(this.$refs.content)
+					.marginLeft(m).marginRight(m)
+				dot.css(this.$refs.popout)
+					.paddingTop(m)
+					.paddingBottom(m)
+					.widthP(80)
+			}
+		}
 	}
 
 	style(css: IDotCss): void {
