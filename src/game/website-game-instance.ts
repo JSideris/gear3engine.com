@@ -23,7 +23,9 @@ export default class WebsiteGameInstance extends GameInstance{
 
 		this.usePlugin(new Canvas2dPlugin({
 			disableScroll: false,
-			target: document.getElementById("container-2d")
+			target: document.getElementById("container-2d"),
+			enableBlinders: false,
+			// backgroundColor: 0xffffff
 		}));
 
 		this.plugin3d = new Canvas3dPlugin({

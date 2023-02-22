@@ -54,7 +54,10 @@ module.exports = {
 			http: false
 		}
 	},
-	plugins: [new HtmlWebpackPlugin()],
+	plugins: [new HtmlWebpackPlugin({
+		title: "Gear3Engine",
+		//favicon
+	})],
 	optimization:{
 		splitChunks: {
 			chunks: 'all',
